@@ -1,5 +1,8 @@
 <resources>
 
     <string name="app_name">Bearing Calculator Example</string>
+    <string name="bearing_pitch">Pitch</string>
+    <string name="bearing_roll">Roll</string>
+    <string name="bearing_yaw">Yaw</string>
 
 </resources>
