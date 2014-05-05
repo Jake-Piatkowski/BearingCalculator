@@ -14,9 +14,9 @@ public class BearingCalculator implements SensorEventListener {
 	private SensorManager sensorManager;
 	private Sensor sensorRotation;
 
-	private double bearingRoll;
-	private double bearingPitch;
-	private double bearingYaw;
+	private int bearingRoll;
+	private int bearingPitch;
+	private int bearingYaw;
 
 	private OnBearingChangeListener onBearingChangeListener;
 
@@ -32,9 +32,15 @@ public class BearingCalculator implements SensorEventListener {
 
 			// Note: code inspired by:
 			// http://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions#Conversion_formulae_between_formalisms
-			this.bearingPitch = Math.toDegrees(Math.acos(rotationMatrix[10]));
-			this.bearingRoll = Math.toDegrees(Math.atan2(rotationMatrix[8], rotationMatrix[9]));
-			this.bearingYaw = Math.toDegrees(-Math.atan2(rotationMatrix[2], rotationMatrix[6]));
+			double pitch = Math.toDegrees(Math.acos(rotationMatrix[10]));
+			double roll = Math.toDegrees(Math.atan2(rotationMatrix[8], rotationMatrix[9]));
+			double yaw = Math.toDegrees(-Math.atan2(rotationMatrix[2], rotationMatrix[6]));
+
+			// Note: storing the values as double would be fine if not for the noise:
+			// they keep changing all the time hence storing them as int
+			this.bearingPitch = Double.valueOf(pitch).intValue();
+			this.bearingRoll = Double.valueOf(roll).intValue();
+			this.bearingYaw = Double.valueOf(yaw).intValue();
 
 			this.onBearingChangeListener.onBearingChanged();
 		}
@@ -71,18 +77,18 @@ public class BearingCalculator implements SensorEventListener {
 		public void onBearingChanged();
 	}
 
-	public double getBearingRoll() {
+	public int getBearingRoll() {
 
 		return this.bearingRoll;
 	}
 
-	public double getBearingPitch() {
+	public int getBearingPitch() {
 
 		// This change is to account for differences in Android's bearing measurements
 		return -this.bearingPitch + 90;
 	}
 
-	public double getBearingYaw() {
+	public int getBearingYaw() {
 
 		return this.bearingYaw;
 	}
