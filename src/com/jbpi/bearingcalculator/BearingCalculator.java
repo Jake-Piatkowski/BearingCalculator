@@ -1,4 +1,4 @@
-package com.jbpi.BearingCalculatorExample;
+package com.jbpi.bearingcalculator;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -55,17 +55,18 @@ public class BearingCalculator implements SensorEventListener {
 		this.sensorManager.unregisterListener(this);
 	}
 
-	public BearingCalculator(Context context) {
+	public BearingCalculator(Context context, OnBearingChangeListener onBearingChangeListener) {
 
 		this.context = context;
 		this.sensorManager = (SensorManager) this.context.getSystemService(Context.SENSOR_SERVICE);
 		this.sensorRotation = this.sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+		this.onBearingChangeListener = onBearingChangeListener;
 	}
 
 	/**
 	 * Callback interface.
 	 */
-	interface OnBearingChangeListener {
+	public interface OnBearingChangeListener {
 
 		public void onBearingChanged();
 	}
