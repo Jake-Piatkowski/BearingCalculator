@@ -14,7 +14,7 @@ public class BearingCalculator implements SensorEventListener {
 	private SensorManager sensorManager;
 	private Sensor sensorRotation;
 
-	private static float[] rotationMatrix = new float[16];
+	private static float[] rotationMatrix = new float[9];
 	private int bearingRoll;
 	private int bearingPitch;
 	private int bearingYaw;
@@ -32,9 +32,9 @@ public class BearingCalculator implements SensorEventListener {
 
 			// Note: code inspired by:
 			// http://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions#Conversion_formulae_between_formalisms
-			double pitch = Math.toDegrees(Math.acos(BearingCalculator.rotationMatrix[10]));
-			double roll = Math.toDegrees(Math.atan2(BearingCalculator.rotationMatrix[8], BearingCalculator.rotationMatrix[9]));
-			double yaw = Math.toDegrees(-Math.atan2(BearingCalculator.rotationMatrix[2], BearingCalculator.rotationMatrix[6]));
+			double pitch = Math.toDegrees(Math.acos(BearingCalculator.rotationMatrix[8]));
+			double roll = Math.toDegrees(Math.atan2(BearingCalculator.rotationMatrix[6], BearingCalculator.rotationMatrix[7]));
+			double yaw = Math.toDegrees(-Math.atan2(BearingCalculator.rotationMatrix[2], BearingCalculator.rotationMatrix[5]));
 
 			// Note: storing the values as double would be fine if not for the noise:
 			// they keep changing all the time hence storing them as int
